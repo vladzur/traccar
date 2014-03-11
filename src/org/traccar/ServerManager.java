@@ -172,8 +172,8 @@ public class ServerManager {
 
     public void start() {
         if (webServer != null) {
-            webServer.start();
-        }
+            //webServer.start();
+        }       
         for (Object server: serverList) {
             ((TrackerServer) server).start();
         }

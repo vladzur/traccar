@@ -45,6 +45,11 @@
             <artifactId>jetty-all-server</artifactId>
             <version>8.1.14.v20131031</version>
         </dependency>
+        <dependency>
+            <groupId>org.jbundle.util.osgi.wrapped</groupId>
+            <artifactId>org.jbundle.util.osgi.wrapped.org.apache.http.client</artifactId>
+            <version>4.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -22,6 +22,7 @@ import org.jboss.netty.handler.timeout.IdleStateEvent;
 import org.traccar.helper.Log;
 import org.traccar.model.DataManager;
 import org.traccar.model.Position;
+import org.traccar.http.HTTPRequest;
 
 /**
  * Tracker message handler
@@ -33,6 +34,8 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
      * Data manager
      */
     private DataManager dataManager;
+    
+    private HTTPRequest request;
 
     TrackerEventHandler(DataManager newDataManager) {
         super();
@@ -49,6 +52,7 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
             s.append("lat: ").append(position.getLatitude()).append(", ");
             s.append("lon: ").append(position.getLongitude());
             Log.info(s.toString());
+            request.POST(position.getDeviceId(), position.getLatitude(),position.getLongitude(), position.getSpeed());
         }
 
         // Write position to database
