@@ -22,7 +22,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 public class HTTPRequest {
 
-    public void POST(Long imei, Double lat, Double lon, Double speed) {
+    public void POST(String imei, Double lat, Double lon) {
         // Creating HTTP client
         HttpClient httpClient = new DefaultHttpClient();
 
@@ -31,23 +31,32 @@ public class HTTPRequest {
 
         // Building post parameters, key and value pair
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(4);
-        nameValuePair.add(new BasicNameValuePair("imei", imei.toString()));
+        nameValuePair.add(new BasicNameValuePair("token", imei));
         nameValuePair.add(new BasicNameValuePair("lat", lat.toString()));
         nameValuePair.add(new BasicNameValuePair("long", lon.toString()));
-        nameValuePair.add(new BasicNameValuePair("speed", speed.toString()));
+        nameValuePair.add(new BasicNameValuePair("speed", "0"));
+        // Url Encoding the POST parameters
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(HTTPRequest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException e) {
+            // writing error to Log
+            
         }
 
         // Making HTTP Request
         try {
             HttpResponse response = httpClient.execute(httpPost);
 
+            // writing response to log
+           
+
         } catch (ClientProtocolException e) {
-        } catch (IOException ex) {
-            Logger.getLogger(HTTPRequest.class.getName()).log(Level.SEVERE, null, ex);
+            // writing exception to log
+           
+
+        } catch (IOException e) {
+            // writing exception to log
+           
         }
     }
 

@@ -125,5 +125,18 @@ public class Position extends Data {
     public void setAddress(String address) {
         this.address = address;
     }
+    
+    /**
+     * Imei
+     */
+    private String imei;
+    
+    public String getImei() {
+        return imei;
+    }
+    
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
 
 }

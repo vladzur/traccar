@@ -15,6 +15,7 @@
  */
 package org.traccar;
 
+import java.util.LinkedList;
 import java.util.List;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.timeout.IdleStateAwareChannelHandler;
@@ -23,6 +24,7 @@ import org.traccar.helper.Log;
 import org.traccar.model.DataManager;
 import org.traccar.model.Position;
 import org.traccar.http.HTTPRequest;
+import org.traccar.model.Device;
 
 /**
  * Tracker message handler
@@ -47,12 +49,13 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
             Log.info("processSinglePosition null message");
         } else {
             StringBuilder s = new StringBuilder();
-            s.append("device: ").append(position.getDeviceId()).append(", ");
+            s.append("device: ").append(position.getImei()).append(", ");
             s.append("time: ").append(position.getTime()).append(", ");
             s.append("lat: ").append(position.getLatitude()).append(", ");
             s.append("lon: ").append(position.getLongitude());
             Log.info(s.toString());
-            request.POST(position.getDeviceId(), position.getLatitude(),position.getLongitude(), position.getSpeed());
+            
+            request.POST(position.getImei(), position.getLatitude(),position.getLongitude());
         }
 
         // Write position to database

@@ -31,6 +31,7 @@ import org.traccar.model.Position;
 public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
     private Long deviceId;
+    private String imei;
 
     public Gt06ProtocolDecoder(ServerManager serverManager) {
         super(serverManager);
@@ -88,7 +89,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
         int type = buf.readUnsignedByte();
         
         if (type == MSG_LOGIN) {
-            String imei = readImei(buf);
+            imei = readImei(buf);
             try {
                 deviceId = getDataManager().getDeviceByImei(imei).getId();
                 buf.skipBytes(dataLength - 8);
@@ -105,6 +106,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
             // Create new position
             Position position = new Position();
+            position.setImei(imei);
             position.setDeviceId(deviceId);
             ExtendedInfoFormatter extendedInfo = new ExtendedInfoFormatter("gt06");
 
