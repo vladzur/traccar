@@ -50,6 +50,18 @@
             <artifactId>org.jbundle.util.osgi.wrapped.org.apache.http.client</artifactId>
             <version>4.1.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.2</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

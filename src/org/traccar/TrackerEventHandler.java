@@ -17,6 +17,8 @@ package org.traccar;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.timeout.IdleStateAwareChannelHandler;
 import org.jboss.netty.handler.timeout.IdleStateEvent;
@@ -45,6 +47,7 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
     }
 
     private void processSinglePosition(Position position) {
+        request = new HTTPRequest();
         if (position == null) {
             Log.info("processSinglePosition null message");
         } else {
@@ -54,8 +57,11 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
             s.append("lat: ").append(position.getLatitude()).append(", ");
             s.append("lon: ").append(position.getLongitude());
             Log.info(s.toString());
-            
-            request.POST(position.getImei(), position.getLatitude(),position.getLongitude());
+            try {
+                request.sendPost(position.getImei(), position.getLatitude(),position.getLongitude());
+            } catch (Exception ex) {
+                Logger.getLogger(TrackerEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         // Write position to database
