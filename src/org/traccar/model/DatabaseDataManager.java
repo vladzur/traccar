@@ -21,11 +21,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.namespace.QName;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.traccar.helper.AdvancedConnection;
@@ -160,7 +156,7 @@ public class DatabaseDataManager implements DataManager {
             queryAddPosition.setDouble("course", position.getCourse());
             queryAddPosition.setString("address", position.getAddress());
             queryAddPosition.setString("extended_info", position.getExtendedInfo());
-            
+
             // DELME: Temporary compatibility support
             XPath xpath = XPathFactory.newInstance().newXPath();
             try {
@@ -197,7 +193,7 @@ public class DatabaseDataManager implements DataManager {
 
     @Override
     public void updateLatestPosition(Long deviceId, Long positionId) throws SQLException {
-        
+
         if (queryUpdateLatestPosition != null) {
             queryUpdateLatestPosition.prepare();
 

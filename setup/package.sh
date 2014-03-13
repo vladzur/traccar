@@ -3,12 +3,12 @@
 # GENERAL REQUIREMENTS
 
 # Check web application
-if [ -e "traccar-web.war" ]; then
-    echo "Web application archive found"
-else
-    echo "Put traccar-web.war into this directory"
-    exit 0
-fi
+#if [ -e "traccar-web.war" ]; then
+#    echo "Web application archive found"
+#else
+#    echo "Put traccar-web.war into this directory"
+#    exit 0
+#fi
 
 # Check wrapper
 if ls wrapper-delta-pack-*.tar.gz &> /dev/null; then
@@ -98,7 +98,7 @@ chmod +x out/bin/traccar
 
 cp ../target/tracker-server.jar out
 cp ../target/lib/* out/lib
-cp traccar-web.war out
+#cp traccar-web.war out
 cp linux/traccar.cfg out/conf
 
 sed -i 's/@app.name@/traccar/g' out/bin/traccar

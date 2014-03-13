@@ -15,7 +15,6 @@
  */
 package org.traccar;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +25,6 @@ import org.traccar.helper.Log;
 import org.traccar.model.DataManager;
 import org.traccar.model.Position;
 import org.traccar.http.HTTPRequest;
-import org.traccar.model.Device;
 
 /**
  * Tracker message handler
@@ -38,7 +36,7 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
      * Data manager
      */
     private DataManager dataManager;
-    
+
     private HTTPRequest request;
 
     TrackerEventHandler(DataManager newDataManager) {
@@ -68,7 +66,7 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
             Long id = dataManager.addPosition(position);
             if (id != null) {
                 dataManager.updateLatestPosition(position.getDeviceId(), id);
-            }
+    }
         } catch (Exception error) {
             Log.warning(error);
         }
