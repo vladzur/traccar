@@ -41,16 +41,6 @@
             <version>3.0.1</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.jetty.aggregate</groupId>
-            <artifactId>jetty-all-server</artifactId>
-            <version>8.1.14.v20131031</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbundle.util.osgi.wrapped</groupId>
-            <artifactId>org.jbundle.util.osgi.wrapped.org.apache.http.client</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.3.1</version>
@@ -60,6 +50,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.3.2</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.aggregate</groupId>
+            <artifactId>jetty-all-server</artifactId>
+            <version>8.1.14.v20131031</version>
             <type>jar</type>
         </dependency>
     </dependencies>

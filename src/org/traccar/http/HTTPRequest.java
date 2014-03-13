@@ -21,7 +21,7 @@ import org.traccar.helper.Log;
 
 public class HTTPRequest {
 
-    public void sendPost(String imei, Double lat, Double lon) throws Exception {
+    public static void sendPost(String imei, Double lat, Double lon) throws Exception {
         String url = "http://www.control-flota.com/track";
 
         HttpClient client = new DefaultHttpClient();

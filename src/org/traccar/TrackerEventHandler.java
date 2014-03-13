@@ -47,7 +47,6 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
     }
 
     private void processSinglePosition(Position position) {
-        request = new HTTPRequest();
         if (position == null) {
             Log.info("processSinglePosition null message");
         } else {
@@ -58,7 +57,7 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
             s.append("lon: ").append(position.getLongitude());
             Log.info(s.toString());
             try {
-                request.sendPost(position.getImei(), position.getLatitude(),position.getLongitude());
+                HTTPRequest.sendPost(position.getImei(), position.getLatitude(),position.getLongitude());
             } catch (Exception ex) {
                 Logger.getLogger(TrackerEventHandler.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -38,7 +38,6 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 import org.traccar.geocode.GoogleReverseGeocoder;
 import org.traccar.geocode.ReverseGeocoder;
 import org.traccar.helper.Log;
-import org.traccar.http.WebServer;
 import org.traccar.model.DataManager;
 import org.traccar.model.DatabaseDataManager;
 import org.traccar.protocol.*;
@@ -72,11 +71,7 @@ public class ServerManager {
         return reverseGeocoder;
     }
 
-    private WebServer webServer;
-
-    public WebServer getWebServer() {
-        return webServer;
-    }
+    
 
     private Properties properties;
 
@@ -164,16 +159,11 @@ public class ServerManager {
         initPiligrimServer("piligrim");
         initStl060Server("stl060");
         
-        // Initialize web server
-        if (Boolean.valueOf(properties.getProperty("http.enable"))) {
-            webServer = new WebServer(properties);
-        }
+       
     }
 
     public void start() {
-        if (webServer != null) {
-            //webServer.start();
-        }       
+           
         for (Object server: serverList) {
             ((TrackerServer) server).start();
         }
@@ -188,9 +178,7 @@ public class ServerManager {
         GlobalChannelFactory.release();
         GlobalTimer.release();
 
-        if (webServer != null) {
-            webServer.stop();
-        }
+       
     }
 
     public void destroy() {
