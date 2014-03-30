@@ -23,18 +23,20 @@ import org.traccar.helper.Log;
 
 public class HTTPRequest {
 
-    public static void sendPost(String imei, Double lat, Double lon) {
-        String url = "http://www.control-flota.com/track";
+    public static void sendPost(String imei, Double lat, Double lon, Double speed) {
+        String url = "http://www.easyavl.com.com/track/store";
+        String app_key = "ZTkJ9DdBpsb8NvsG";
 
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost(url);
         
 
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("token", imei));
-        urlParameters.add(new BasicNameValuePair("lat", lat.toString()));
-        urlParameters.add(new BasicNameValuePair("long", lon.toString()));
-        urlParameters.add(new BasicNameValuePair("speed", "0"));
+        urlParameters.add(new BasicNameValuePair("key", app_key));
+        urlParameters.add(new BasicNameValuePair("imei", imei));
+        urlParameters.add(new BasicNameValuePair("latitude", lat.toString()));
+        urlParameters.add(new BasicNameValuePair("longitude", lon.toString()));
+        urlParameters.add(new BasicNameValuePair("speed", speed.toString()));
         try {
             post.setEntity(new UrlEncodedFormEntity(urlParameters));
         } catch (UnsupportedEncodingException ex) {
