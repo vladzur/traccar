@@ -32,74 +32,74 @@ import org.traccar.http.HTTPRequest;
 @ChannelHandler.Sharable
 public class TrackerEventHandler extends IdleStateAwareChannelHandler {
 
-    /**
-     * Data manager
-     */
-    private DataManager dataManager;
+  /**
+   * Data manager
+   */
+  private DataManager dataManager;
 
-    private HTTPRequest request;
+  private HTTPRequest request;
 
-    TrackerEventHandler(DataManager newDataManager) {
-        super();
-        dataManager = newDataManager;
+  TrackerEventHandler(DataManager newDataManager) {
+    super();
+    dataManager = newDataManager;
+  }
+
+  private void processSinglePosition(Position position) {
+    if (position == null) {
+      Log.info("processSinglePosition null message");
+    } else {
+      StringBuilder s = new StringBuilder();
+      s.append("device: ").append(position.getImei()).append(", ");
+      s.append("time: ").append(position.getTime()).append(", ");
+      s.append("lat: ").append(position.getLatitude()).append(", ");
+      s.append("lon: ").append(position.getLongitude());
+      Log.info(s.toString());
+      try {
+        HTTPRequest.sendPost(position.getImei(), position.getLatitude(), position.getLongitude(), position.getSpeed());
+      } catch (Exception ex) {
+        Logger.getLogger(TrackerEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
 
-    private void processSinglePosition(Position position) {
-        if (position == null) {
-            Log.info("processSinglePosition null message");
-        } else {
-            StringBuilder s = new StringBuilder();
-            s.append("device: ").append(position.getImei()).append(", ");
-            s.append("time: ").append(position.getTime()).append(", ");
-            s.append("lat: ").append(position.getLatitude()).append(", ");
-            s.append("lon: ").append(position.getLongitude());
-            Log.info(s.toString());
-            try {
-                HTTPRequest.sendPost(position.getImei(), position.getLatitude(),position.getLongitude(), position.getSpeed());
-            } catch (Exception ex) {
-                Logger.getLogger(TrackerEventHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    // Write position to database
+//    try {
+//      Long id = dataManager.addPosition(position);
+//      if (id != null) {
+//        dataManager.updateLatestPosition(position.getDeviceId(), id);
+//      }
+//    } catch (Exception error) {
+//      Log.warning(error);
+//    }
+  }
 
-        // Write position to database
-        try {
-            Long id = dataManager.addPosition(position);
-            if (id != null) {
-                dataManager.updateLatestPosition(position.getDeviceId(), id);
+  @Override
+  public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
+    if (e.getMessage() instanceof Position) {
+      processSinglePosition((Position) e.getMessage());
+    } else if (e.getMessage() instanceof List) {
+      List<Position> positions = (List<Position>) e.getMessage();
+      for (Position position : positions) {
+        processSinglePosition(position);
+      }
     }
-        } catch (Exception error) {
-            Log.warning(error);
-        }
-    }
+  }
 
-    @Override
-    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
-        if (e.getMessage() instanceof Position) {
-            processSinglePosition((Position) e.getMessage());
-        } else if (e.getMessage() instanceof List) {
-            List<Position> positions = (List<Position>) e.getMessage();
-            for (Position position : positions) {
-                processSinglePosition(position);
-            }
-        }
-    }
+  @Override
+  public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
+    Log.info("Closing connection by disconnect");
+    e.getChannel().close();
+  }
 
-    @Override
-    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
-        Log.info("Closing connection by disconnect");
-        e.getChannel().close();
-    }
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+    Log.info("Closing connection by exception");
+    e.getChannel().close();
+  }
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-        Log.info("Closing connection by exception");
-        e.getChannel().close();
-    }
-
-    @Override
-    public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) {
-        Log.info("Closing connection by timeout");
-        e.getChannel().close();
-    }
+  @Override
+  public void channelIdle(ChannelHandlerContext ctx, IdleStateEvent e) {
+    Log.info("Closing connection by timeout");
+    e.getChannel().close();
+  }
 
 }
