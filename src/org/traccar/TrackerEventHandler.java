@@ -57,7 +57,7 @@ public class TrackerEventHandler extends IdleStateAwareChannelHandler {
       try {
         HTTPRequest.sendPost(position.getImei(), position.getLatitude(), position.getLongitude(), position.getSpeed());
       } catch (Exception ex) {
-        Logger.getLogger(TrackerEventHandler.class.getName()).log(Level.SEVERE, null, ex);
+        Log.warning(ex.getMessage());
       }
     }
 

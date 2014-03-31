@@ -24,7 +24,7 @@ import org.traccar.helper.Log;
 public class HTTPRequest {
 
     public static void sendPost(String imei, Double lat, Double lon, Double speed) {
-        String url = "http://www.easyavl.com.com/track/store";
+        String url = "http://www.easyavl.com/tracks/store";
         String app_key = "ZTkJ9DdBpsb8NvsG";
 
         HttpClient client = new DefaultHttpClient();
@@ -40,14 +40,14 @@ public class HTTPRequest {
         try {
             post.setEntity(new UrlEncodedFormEntity(urlParameters));
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(HTTPRequest.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(HTTPRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         HttpResponse response;
         try {
             response = client.execute(post);
         } catch (IOException ex) {
-            Logger.getLogger(HTTPRequest.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(HTTPRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
