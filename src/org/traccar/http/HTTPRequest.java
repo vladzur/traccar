@@ -32,7 +32,7 @@ public class HTTPRequest {
         
 
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("key", app_key));
+        urlParameters.add(new BasicNameValuePair("app_key", app_key));
         urlParameters.add(new BasicNameValuePair("imei", imei));
         urlParameters.add(new BasicNameValuePair("latitude", lat.toString()));
         urlParameters.add(new BasicNameValuePair("longitude", lon.toString()));
